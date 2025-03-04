@@ -1,13 +1,14 @@
 @import 'loader';
 
-html, body {
+html,
+body {
   width: 100%;
   height: 100%;
   overflow: hidden;
 }
 
 body {
-  background: #000;
+  background: rgb(115, 199, 255);
   margin: 0;
   position: relative;
 }
