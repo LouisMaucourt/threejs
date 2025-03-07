@@ -11,7 +11,7 @@ import model from '../../assets/models/fly.glb'
 
 
 import { waterMesh } from '~/objects/Newwater';
-import { TransitionMesh } from '~/objects/Transition';
+import { GlitchMesh } from '~/objects/GlitchWater';
 import { SkyBox } from '~/objects/SkyBox';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
@@ -34,7 +34,7 @@ export class ExampleScene extends Scene implements Lifecycle {
   public light2: PointLight
   public light3: PointLight
   public Newwater: Mesh
-  public TransitionMesh: Mesh
+  public GlitchMesh: Mesh
   public SkyBox: Mesh
 
   public constructor({ clock, camera, viewport }: MainSceneParameters) {
@@ -62,11 +62,10 @@ export class ExampleScene extends Scene implements Lifecycle {
     this.SkyBox = SkyBox;
     this.Newwater = waterMesh;
     this.Newwater = waterMesh;
-    this.TransitionMesh = TransitionMesh
-    // this.TransitionMesh.visible = false;
+    this.GlitchMesh = GlitchMesh
     this.Newwater.rotation.x = - Math.PI * 0.5;
     this.Newwater.position.set(0, -1, 0);
-    this.TransitionMesh.position.set(0, 1, 4);
+    this.GlitchMesh.position.set(0, 1, 4);
 
 
     this.add(
@@ -76,7 +75,7 @@ export class ExampleScene extends Scene implements Lifecycle {
       this.light3,
       this.Newwater,
       this.SkyBox,
-      this.TransitionMesh
+      this.GlitchMesh
     );
   }
 

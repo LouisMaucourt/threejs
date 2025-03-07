@@ -2,14 +2,15 @@ import { Mesh, PlaneGeometry, ShaderMaterial } from 'three';
 import vertexShader from '../shaders/transition/vertex.glsl';
 import fragmentShader from '../shaders/transition/fragment.glsl';
 
-const TransitionGeometry = new PlaneGeometry(3, 3, 124, 124);
+const GlitchGeometry = new PlaneGeometry(5, 5, 124, 124);
 
 const material = new ShaderMaterial({
     vertexShader,
     fragmentShader,
     uniforms: {
-        ratio: { value: 0.0 },
-        time: { value: 1.0 },
+        ratio: { value: 1.0 },
+        time: { value: 10.0 },
+        opacity: { value: 0.1 },
     },
 
     depthWrite: false,
@@ -17,4 +18,4 @@ const material = new ShaderMaterial({
     visible: false
 });
 
-export const TransitionMesh = new Mesh(TransitionGeometry, material)
+export const GlitchMesh = new Mesh(GlitchGeometry, material)

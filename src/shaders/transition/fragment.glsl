@@ -1,5 +1,6 @@
 uniform float ratio;
 uniform float time;
+uniform float opacity; 
 
 varying vec2 vUv;
 
@@ -34,9 +35,7 @@ float vorocloud(vec2 p, float time) {
 void main() {
     vec2 uv = vUv;
     
-    // Example simple effect using the vorocloud function
     float cloud = vorocloud(uv, time);
     vec3 color = vec3(cloud * ratio, cloud * 0.5, cloud * 0.8);
-    
-    gl_FragColor = vec4(color, 1.0);
+    gl_FragColor = vec4(color * opacity, opacity);
 }

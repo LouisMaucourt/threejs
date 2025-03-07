@@ -2,7 +2,6 @@ import { PerspectiveCamera, Color, Audio, AudioListener, AudioLoader, ShaderMate
 import gsap from 'gsap';
 import { ExampleScene } from '~/scenes/ExampleScene';
 import { TextOverlayManager } from './TextOverlayManager';
-// import { transition } from 'three/examples/jsm/tsl/display/TransitionNode.js';
 
 interface ScrollEffectsManagerParams {
     scene: ExampleScene;
@@ -72,15 +71,22 @@ export class ScrollEffectsManager {
         '1.5',
         '2',
     ];
-    // private readonly Transition = [
-    //     'false',
-    //     'false',
-    //     'false',
-    //     'false',
-    //     'true',
-    //     'true',
-    // ];
-
+    private readonly glitchRatio = [
+        '1',
+        '2',
+        '10',
+        '20',
+        '30',
+        '50',
+    ];
+    private readonly glitchOpacity = [
+        '0.1',
+        '0.1',
+        '0.2',
+        '0.4',
+        '0.6',
+        '0.8',
+    ];
     private audioListener: AudioListener;
     private audio: Audio;
     private audioLoader: AudioLoader;
@@ -124,17 +130,39 @@ export class ScrollEffectsManager {
         this.updateWaterMaterial();
         this.updateTextMessage();
         this.updateAudioPlaybackRate();
-        // this.updateTransition();
+        this.updateTransition();
     };
 
-    // private updateTransition(): void {
-    //     const wheelIndex = this.calculateWheelIndex();
-    //     const transitionMaterial = this.scene.TransitionMesh.material as ShaderMaterial;
-    //     transitionMaterial.visible = this.Transition[wheelIndex] === 'true';
-    //     setTimeout(() => {
-    //         transitionMaterial.visible = this.Transition[wheelIndex] === 'false';
-    //     }, 1000);
-    // }
+
+
+    private updateTransition(): void {
+        const glitchchance = [
+            0.0,
+            0.05,
+            0.1,
+            0.15,
+            0.3,
+            0.5,
+        ];
+
+        const wheelIndex = this.calculateWheelIndex();
+        const transitionMaterial = this.scene.GlitchMesh.material as ShaderMaterial;
+        const chance = glitchchance[wheelIndex];
+        transitionMaterial.uniforms.ratio.value = this.glitchRatio[wheelIndex];
+        transitionMaterial.uniforms.opacity.value = this.glitchOpacity[wheelIndex];
+
+        const chanceTransition = Math.random();
+        if (chanceTransition < chance) {
+            console.log(chanceTransition);
+            transitionMaterial.visible = true;
+            setTimeout(() => {
+                transitionMaterial.visible = false;
+            }, 1000);
+        } else {
+            transitionMaterial.visible = false;
+        }
+    }
+
 
     private updateAudioPlaybackRate(): void {
         const wheelIndex = this.calculateWheelIndex();
@@ -171,11 +199,11 @@ export class ScrollEffectsManager {
         waterMaterial.uniforms.uColorMultiplier.value = this.uColorMultiplier[wheelIndex];
         waterMaterial.uniforms.uBigWavesSpeed.value = this.uBigWavesSpeed[wheelIndex];
     }
-
     private calculateWheelIndex(): number {
         const wheel = Math.floor(Math.abs(this.scrollDistance) / (window.innerHeight * 10));
-        return Math.min(wheel, this.maxWheelIndex);
+        return wheel % (this.maxWheelIndex + 1); // Boucle entre 0 et 5
     }
+
 
     private updateTextMessage(): void {
         const wheelIndex = this.calculateWheelIndex();
