@@ -2,6 +2,7 @@ import { PerspectiveCamera, Color, Audio, AudioListener, AudioLoader, ShaderMate
 import gsap from 'gsap';
 import { ExampleScene } from '~/scenes/ExampleScene';
 import { TextOverlayManager } from './TextOverlayManager';
+import { transition } from 'three/examples/jsm/tsl/display/TransitionNode.js';
 
 interface ScrollEffectsManagerParams {
     scene: ExampleScene;
@@ -20,21 +21,21 @@ export class ScrollEffectsManager {
     private readonly maxFovOffset = 50;
 
     private readonly uSurfaceColor = [
-        '#5dceff',
-        '#41C5FD',
-        '#0704B4',
-        '#ff0000',
-        '#ffe200',
-        '#000000',
+        '#9bd8ff',
+        '#9bd8ff',
+        '#77f1f3',
+        '#29526a',
+        '#d7e052',
+        '#ae0f0f',
     ];
 
     private readonly uDepthColor = [
         '#186691',
-        '#085078',
-        '#000F17',
-        '#4ECDC4',
-        '#ff0000',
-        '#085078',
+        '#186691',
+        '#5992b1',
+        '#17900e',
+        '#7a8f32',
+        '#530e0e',
     ];
 
     private readonly uBigWavesSpeed = [
@@ -57,11 +58,11 @@ export class ScrollEffectsManager {
 
     private readonly uColorMultiplier = [
         '5',
-        '5.1',
+        '5',
         '5.2',
         '5.3',
-        '5.6',
-        '6',
+        '5',
+        '10',
     ];
     private readonly AudioPlayBackrate = [
         '1',
@@ -70,6 +71,14 @@ export class ScrollEffectsManager {
         '1.2',
         '1.5',
         '2',
+    ];
+    private readonly Transition = [
+        'false',
+        'false',
+        'false',
+        'false',
+        'true',
+        'true',
     ];
 
     private audioListener: AudioListener;
@@ -94,7 +103,6 @@ export class ScrollEffectsManager {
         window.addEventListener('wheel', this.handleWheel);
         this.setupWheelReset();
         this.loadAudio();
-
     }
 
     public stop(): void {
@@ -106,26 +114,34 @@ export class ScrollEffectsManager {
         const zoomSpeed = 0.05;
 
         this.scrollDistance += event.deltaY * 0.5;
-
         this.scene.light1.position.z += event.deltaY * speed;
         this.scene.light2.position.z += event.deltaY * speed;
         this.scene.light3.position.z += event.deltaY * speed;
         const waterMaterial = this.scene.Newwater.material as ShaderMaterial;
         waterMaterial.uniforms.uOffset.value.y += event.deltaY * 0.002;
 
-
         this.animateCameraFov(event.deltaY * zoomSpeed);
         this.updateWaterMaterial();
         this.updateTextMessage();
         this.updateAudioPlaybackRate();
+        // this.updateTransition();
     };
 
+    // private updateTransition(): void {
+    //     const wheelIndex = this.calculateWheelIndex();
+    //     const transitionMaterial = this.scene.TransitionMesh.material as ShaderMaterial;
+    //     transitionMaterial.visible = this.Transition[wheelIndex] === 'true';
+    //     setTimeout(() => {
+    //         transitionMaterial.visible = this.Transition[wheelIndex] === 'false';
+    //     }, 1000);
+    // }
 
     private updateAudioPlaybackRate(): void {
         const wheelIndex = this.calculateWheelIndex();
         const playbackRate = parseFloat(this.AudioPlayBackrate[wheelIndex]);
         this.audio.setPlaybackRate(playbackRate);
     }
+
     private animateCameraFov(deltaFov: number): void {
         const currentFov = this.camera.fov;
         const newFov = Math.max(
@@ -199,8 +215,6 @@ export class ScrollEffectsManager {
             }
         });
     }
-
-
 
     public update(): void { }
 

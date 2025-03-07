@@ -2,12 +2,12 @@ export class TextOverlayManager {
     private textOverlay: HTMLDivElement | undefined
     private textMessage = "Démarre ton moteur cyber-sonic en scrollant"
     private readonly messages = [
-        "Belle vue n'es-ce pas ?",
-        "C'est bizarre, mais tu n'as pas le choix... Continue d'avancer.",
-        "Tu n'as pas encore vu le vrai changement... Accélère !",
+        "Belle vue, n'est-ce pas ?",
+        "C'est un peu étrange, mais tu n'as pas trop le choix... Allez, continue d'avancer.",
+        "Accélère, on n'est pas là pour traîner ! ACCÉlEREEEEEEEEE !",
         "Tu es déjà bien engagé, ne te retourne pas, c'est trop tard.",
-        "Oula... C'est quoi ce bordel, NE T'ARRETE SURTOUT PAS ?",
-        "Pourquoi toujours toujours avancer, peut etre que la clé est de rester à admirer une mer",
+        "Oula mais quoi hein, LA FIN DU MONDE...  NE T'ARRETE SURTOUT PAS ?",
+        "Pourquoi toujours toujours avancer, Peut etre que la clé est de rester à admirer du moment",
     ]
 
 

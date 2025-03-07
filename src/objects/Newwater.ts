@@ -20,7 +20,7 @@ const waterMaterial = new ShaderMaterial({
         uSmallIterations: { value: 3 },
 
         uDepthColor: { value: new Color('#186691') },
-        uSurfaceColor: { value: new Color('#5dceff') },
+        uSurfaceColor: { value: new Color('#9bd8ff') },
         uColorOffset: { value: 0.08 },
         uColorMultiplier: { value: 5 }
 

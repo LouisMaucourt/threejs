@@ -62,8 +62,11 @@ export class ExampleScene extends Scene implements Lifecycle {
     this.Newwater = waterMesh;
     this.Newwater = waterMesh;
     this.TransitionMesh = TransitionMesh
+    // this.TransitionMesh.visible = false;
     this.Newwater.rotation.x = - Math.PI * 0.5;
     this.Newwater.position.set(0, -1, 0);
+    this.TransitionMesh.position.set(0, 1, 4);
+
 
     this.add(
       this.sun,
@@ -98,8 +101,8 @@ export class ExampleScene extends Scene implements Lifecycle {
 
     const waterMaterial = this.Newwater.material as ShaderMaterial;
     waterMaterial.uniforms.uTime.value = theta + this.clock.elapsed * 0.001;
-  }
 
+  }
   public resize(): void {
     this.camera.aspect = this.viewport.ratio;
     this.camera.updateProjectionMatrix();
