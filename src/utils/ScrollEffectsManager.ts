@@ -2,7 +2,7 @@ import { PerspectiveCamera, Color, Audio, AudioListener, AudioLoader, ShaderMate
 import gsap from 'gsap';
 import { ExampleScene } from '~/scenes/ExampleScene';
 import { TextOverlayManager } from './TextOverlayManager';
-import { transition } from 'three/examples/jsm/tsl/display/TransitionNode.js';
+// import { transition } from 'three/examples/jsm/tsl/display/TransitionNode.js';
 
 interface ScrollEffectsManagerParams {
     scene: ExampleScene;
@@ -72,14 +72,14 @@ export class ScrollEffectsManager {
         '1.5',
         '2',
     ];
-    private readonly Transition = [
-        'false',
-        'false',
-        'false',
-        'false',
-        'true',
-        'true',
-    ];
+    // private readonly Transition = [
+    //     'false',
+    //     'false',
+    //     'false',
+    //     'false',
+    //     'true',
+    //     'true',
+    // ];
 
     private audioListener: AudioListener;
     private audio: Audio;
