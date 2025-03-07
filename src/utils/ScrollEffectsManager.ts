@@ -201,7 +201,7 @@ export class ScrollEffectsManager {
     }
     private calculateWheelIndex(): number {
         const wheel = Math.floor(Math.abs(this.scrollDistance) / (window.innerHeight * 10));
-        return wheel % (this.maxWheelIndex + 1); // Boucle entre 0 et 5
+        return wheel % (this.maxWheelIndex + 1);
     }
 
 
