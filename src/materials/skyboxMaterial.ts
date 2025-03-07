@@ -1,15 +1,21 @@
 import { MeshBasicMaterial, BackSide, TextureLoader } from "three";
 
+import pathBlue_back from "../../assets/textures/skyblue/bkg1_back.png";
+import pathBlue_bot from "../../assets/textures/skyblue/bkg1_bot.png";
+import pathBlue_front from "../../assets/textures/skyblue/bkg1_front.png";
+import pathBlue_left from "../../assets/textures/skyblue/bkg1_left.png";
+import pathBlue_right from "../../assets/textures/skyblue/bkg1_right.png";
+import pathBlue_top from "../../assets/textures/skyblue/bkg1_top.png";
+
 const textureLoader = new TextureLoader();
-const pathBlue = "assets/textures/skyblue/bkg1_";
 
 const texturesBlue = {
-    back: textureLoader.load(`${pathBlue}back.png`),
-    bottom: textureLoader.load(`${pathBlue}bot.png`),
-    front: textureLoader.load(`${pathBlue}front.png`),
-    left: textureLoader.load(`${pathBlue}left.png`),
-    right: textureLoader.load(`${pathBlue}right.png`),
-    top: textureLoader.load(`${pathBlue}top.png`),
+    back: textureLoader.load(pathBlue_back),
+    bottom: textureLoader.load(pathBlue_bot),
+    front: textureLoader.load(pathBlue_front),
+    left: textureLoader.load(pathBlue_left),
+    right: textureLoader.load(pathBlue_right),
+    top: textureLoader.load(pathBlue_top),
 };
 
 export const skyboxMat = [

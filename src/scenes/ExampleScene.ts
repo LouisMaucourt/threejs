@@ -7,6 +7,7 @@ import {
   AmbientLight,
   ShaderMaterial,
 } from 'three'
+import model from '../../assets/models/fly.glb'
 
 
 import { waterMesh } from '~/objects/Newwater';
@@ -81,7 +82,7 @@ export class ExampleScene extends Scene implements Lifecycle {
 
   public async load(): Promise<void> {
     const loader = new GLTFLoader();
-    loader.load('assets/models/fly.glb', (gltf) => {
+    loader.load(model, (gltf) => {
       this.model = gltf.scene;
       this.model.scale.set(0.003, 0.003, 0.003);
       this.model.rotation.set(0, 11, 0);
