@@ -2,8 +2,9 @@ import { WebGLRenderer, PerspectiveCamera } from 'three'
 import { Clock, Loop, Viewport, type Lifecycle } from '~/core'
 import type { GUI } from '~/GUI'
 import { Composer } from '~/Composer'
-// import { Controls } from '~/Controls'
 import { ExampleScene } from '~/scenes/ExampleScene'
+import { TextOverlayManager } from './utils/TextOverlayManager'
+import { ScrollEffectsManager } from './utils/ScrollEffectsManager'
 
 export interface AppParameters {
   canvas?: HTMLCanvasElement | OffscreenCanvas
@@ -15,12 +16,14 @@ export class App implements Lifecycle {
   public renderer: WebGLRenderer
   public composer: Composer
   public camera: PerspectiveCamera
-  // public controls: Controls
   public loop: Loop
   public clock: Clock
   public viewport: Viewport
   public scene: ExampleScene
   public gui?: GUI
+
+  private textOverlayManager: TextOverlayManager
+  private scrollEffectsManager: ScrollEffectsManager
 
   public constructor({
     canvas,
@@ -58,14 +61,15 @@ export class App implements Lifecycle {
       camera: this.camera
     })
 
-    // this.controls = new Controls({
-    //   camera: this.camera,
-    //   element: this.renderer.domElement,
-    //   clock: this.clock
-    // })
-
     this.loop = new Loop({
       tick: this.tick
+    })
+
+    this.textOverlayManager = new TextOverlayManager()
+    this.scrollEffectsManager = new ScrollEffectsManager({
+      scene: this.scene,
+      camera: this.camera,
+      textOverlayManager: this.textOverlayManager,
     })
   }
 
@@ -75,27 +79,17 @@ export class App implements Lifecycle {
   public async load(): Promise<void> {
     await Promise.all([
       this.composer.load(),
-      this.scene.load()
+      this.scene.load(),
     ])
 
     if (this.debug) {
       this.gui = new (await import('./GUI')).GUI(this)
     }
+
+
+    // Initialize text overlay
+    this.textOverlayManager.init()
   }
-
-  public handleWheel = (event: WheelEvent): void => {
-    const speed = 0.01;
-    this.scene.camera.position.z += event.deltaY * speed;
-
-    if (this.scene.model) {
-      this.scene.model.position.z += event.deltaY * speed;
-    }
-
-    // Déplacement des lumières
-    this.scene.light1.position.z += event.deltaY * speed;
-    this.scene.light2.position.z += event.deltaY * speed;
-    this.scene.light3.position.z += event.deltaY * speed;
-  };
 
   /**
    * Start the app rendering loop
@@ -104,8 +98,7 @@ export class App implements Lifecycle {
     this.viewport.start()
     this.clock.start()
     this.loop.start()
-    // this.controls.start()
-    window.addEventListener("wheel", this.handleWheel);
+    this.scrollEffectsManager.start()
     this.gui?.start()
   }
 
@@ -113,9 +106,9 @@ export class App implements Lifecycle {
    * Stop the app rendering loop
    */
   public stop(): void {
-    // this.controls.stop()
     this.viewport.stop()
     this.loop.stop()
+    this.scrollEffectsManager.stop()
   }
 
   /**
@@ -123,10 +116,11 @@ export class App implements Lifecycle {
    */
   public update(): void {
     this.clock.update()
-    // this.controls.update()
     this.viewport.update()
     this.scene.update()
     this.composer.update()
+    this.scrollEffectsManager.update()
+
   }
 
   /**
@@ -137,11 +131,11 @@ export class App implements Lifecycle {
   }
 
   /**
-   * Stop the app and dispose of used resourcess
+   * Stop the app and dispose of used resources
    */
   public dispose(): void {
-    window.removeEventListener("wheel", this.handleWheel); // ✅ Nettoyage du listener
-    // this.controls.dispose()
+    this.scrollEffectsManager.dispose()
+    this.textOverlayManager.dispose()
     this.viewport.dispose()
     this.loop.dispose()
     this.scene.dispose()

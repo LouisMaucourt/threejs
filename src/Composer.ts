@@ -17,7 +17,7 @@ import type {
   Lifecycle
 } from '~/core'
 
-export interface ComposerParameters  {
+export interface ComposerParameters {
   renderer: WebGLRenderer
   viewport: Viewport
   clock: Clock

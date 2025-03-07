@@ -28,7 +28,7 @@ export class Viewport implements Lifecycle {
   }: ViewportParameters) {
     this.element = element
     this.maximumDpr = maximumDpr
-    this.resize = resize || (() => {})
+    this.resize = resize || (() => { })
   }
 
   public update(): void {
