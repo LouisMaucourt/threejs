@@ -12,4 +12,4 @@ const material = new ShaderMaterial({
     },
 });
 
-export const TransitionMesh = new Mesh(TransitionGeometry, material);
+export const TransitionMesh = new Mesh(TransitionGeometry, material)
