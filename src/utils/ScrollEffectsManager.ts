@@ -1,8 +1,8 @@
-import { PerspectiveCamera, Color, Audio, AudioListener, AudioLoader, ShaderMaterial } from 'three';
+import { type PerspectiveCamera, Color, Audio, AudioListener, AudioLoader, type ShaderMaterial } from 'three';
 import gsap from 'gsap';
 import { ExampleScene } from '~/scenes/ExampleScene';
 import { TextOverlayManager } from './TextOverlayManager';
-
+import audioFile from '../../assets/sound.mp3'; // Corrected import
 interface ScrollEffectsManagerParams {
     scene: ExampleScene;
     camera: PerspectiveCamera;
@@ -233,7 +233,7 @@ export class ScrollEffectsManager {
     private loadAudio(): void {
         window.addEventListener("click", () => {
             if (!this.audio.isPlaying) {
-                this.audioLoader.load('/assets/sound.mp3', (buffer) => {
+                this.audioLoader.load(audioFile, (buffer) => { 
                     this.audio.setBuffer(buffer);
                     this.audio.setLoop(true);
                     this.audio.setVolume(0.5);
