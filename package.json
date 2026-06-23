@@ -2,8 +2,6 @@
   "private": true,
   "name": "three-app",
   "description": "Three app using vite and typescript",
-  "author": "Julien Dargelos <hello@julien.gl>",
-  "license": "MIT",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
