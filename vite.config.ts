@@ -4,6 +4,9 @@ import tsconfigPaths from 'vite-tsconfig-paths'
 import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 export default defineConfig({
+  server: {
+    allowedHosts: ["vroummm.louismaucourt.fun"]
+  },
   assetsInclude: [
     '**/*.gltf',
     '**/*.glb',
